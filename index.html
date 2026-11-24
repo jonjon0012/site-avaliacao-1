@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -70,15 +69,21 @@
 
         <p>Quantas estrelas você daria?</p>
 
-        <div class="estrelas">
-            <span class="estrela" onclick="avaliar(1)">★</span>
-            <span class="estrela" onclick="avaliar(2)">★</span>
-            <span class="estrela" onclick="avaliar(3)">★</span>
-            <span class="estrela" onclick="avaliar(4)">★</span>
-            <span class="estrela" onclick="avaliar(5)">★</span>
-        </div>
+        <!-- FORMULÁRIO CORRIGIDO COM O METHOD="POST" -->
+        <form id="form-avaliacao" action="https://formspree.io/f/mnpdowbd" method="POST">
+            
+            <input type="hidden" name="nota" id="campo-nota" value="0">
 
-        <button onclick="enviar()">Enviar avaliação</button>
+            <div class="estrelas">
+                <span class="estrela" onclick="avaliar(1)">★</span>
+                <span class="estrela" onclick="avaliar(2)">★</span>
+                <span class="estrela" onclick="avaliar(3)">★</span>
+                <span class="estrela" onclick="avaliar(4)">★</span>
+                <span class="estrela" onclick="avaliar(5)">★</span>
+            </div>
+
+            <button type="submit">Enviar avaliação</button>
+        </form>
 
         <p id="mensagem"></p>
     </div>
@@ -88,6 +93,7 @@
 
         function avaliar(valor) {
             nota = valor;
+            document.getElementById("campo-nota").value = valor;
 
             let estrelas = document.querySelectorAll(".estrela");
 
@@ -96,17 +102,18 @@
             });
         }
 
-        function enviar() {
+        document.getElementById("form-avaliacao").addEventListener("submit", function(event) {
             let mensagem = document.getElementById("mensagem");
 
             if (nota === 0) {
+                event.preventDefault(); 
                 mensagem.style.color = "red";
                 mensagem.innerText = "Selecione uma quantidade de estrelas!";
             } else {
                 mensagem.style.color = "green";
-                mensagem.innerText = "Obrigado pela sua avaliação de " + nota + " estrelas!";
+                mensagem.innerText = "Enviando sua avaliação de " + nota + " estrelas...";
             }
-        }
+        });
     </script>
 
 </body>
